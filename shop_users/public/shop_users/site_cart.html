@@ -43,7 +43,9 @@
                                             fill="#F9FFFB" />
                                     </svg>
                                 </span>
-                                <span class="cart-text">Cart</span>
+                                <span class="cart-text">
+                                    Cart
+                                </span>
                             </a>
                         </div>
                         <div class="header-user">
@@ -76,9 +78,7 @@
                         </svg>
                     </span>
                 </button>
-                <a href="#" class="mobile-header-logo">
-                    <img src="assets/images/logos/logo.webp" alt="logo">
-                </a>
+                <a href="#" class="mobile-header-logo"><img src="assets/images/logos/logo.webp" alt="logo"></a>
                 <a href="cart.html" class="header-cart cart-item">
                     <span>
                         <svg width="35" height="28" viewBox="0 0 35 28" fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -144,8 +144,7 @@
                             </div>
                         </div>
                         <div class="shop-btn">
-                            <button type="button" class="btn-close" data-bs-dismiss="offcanvas"
-                                aria-label="Close"></button>
+                            <button type="button" class="btn-close" data-bs-dismiss="offcanvas" aria-label="Close"></button>
                         </div>
                     </div>
                     <div class="header-input">
@@ -199,56 +198,84 @@
         </div>
     </header>
     <!--------------- header-section-end --------------->
-    
+
     <!-- put your content here -->
-    <section class="login account footer-padding">
-        <div class="container">
-            <div class="login-section">
-                <div class="review-form">
-                    <h5 class="comment-title">Create Account</h5>
-
-                    <div class=" account-inner-form">
-                        <div class="review-form-name">
-                            <label for="email" class="form-label">Email*</label>
-                            <input type="email" id="email" class="form-control" placeholder="user@gmail.com">
-                        </div>
-
-                    </div>
-                    <div class="account-inner-form">
-                        <div class="review-form-name">
-                            <label for="phone" class="form-label">Phone*</label>
-                            <input type="tel" id="phone" class="form-control" placeholder="+880388**0899">
-                        </div>
-                    </div>
-                    <div class="review-form-name address-form">
-                        <label for="password" class="form-label">Password</label>
-                        <input type="password" id="password" class="form-control" placeholder="Enter your password" />
-                    </div>
-                    <div class="review-form-name address-form">
-                        <label for="confirm_password" class="form-label">Confirm Password</label>
-                        <input type="password" id="confirm_password" class="form-control"
-                            placeholder="Enter your password" />
-                    </div>
-                    <div class="login-btn text-center">
-                        <button type="submit" class="shop-btn">Sign up</button>
-                    </div>
-                </div>
-            </div>
+    <div class="container my-5">
+        <div class="cart-section">
+            <table>
+                <tbody>
+                    <tr class="table-row table-top-row">
+                        <td class="table-wrapper wrapper-product">
+                            <h5 class="table-heading">PRODUCT</h5>
+                        </td>
+                        <td class="table-wrapper">
+                            <div class="table-wrapper-center">
+                                <h5 class="table-heading">PRICE</h5>
+                            </div>
+                        </td>
+                        <td class="table-wrapper">
+                            <div class="table-wrapper-center">
+                                <h5 class="table-heading">QUANTITY</h5>
+                            </div>
+                        </td>
+                        <td class="table-wrapper wrapper-total">
+                            <div class="table-wrapper-center">
+                                <h5 class="table-heading">TOTAL</h5>
+                            </div>
+                        </td>
+                        <td class="table-wrapper">
+                            <div class="table-wrapper-center">
+                                <h5 class="table-heading">ACTION</h5>
+                            </div>
+                        </td>
+                    </tr>
+                    <tr class="table-row ticket-row">
+                        <td class="table-wrapper wrapper-product">
+                            <div class="wrapper">
+                                <div class="wrapper-img">
+                                    <img src="assets/images/homepage-one/product-img/product-img-1.webp" alt="img">
+                                </div>
+                                <div class="wrapper-content">
+                                    <h5 class="heading">Classic Oxford Shirt</h5>
+                                </div>
+                            </div>
+                        </td>
+                        <td class="table-wrapper">
+                            <div class="table-wrapper-center"><h5 class="heading">$10.00</h5></div>
+                        </td>
+                        <td class="table-wrapper">
+                            <div class="table-wrapper-center"><h5 class="heading">1</h5></div>
+                        </td>
+                        <td class="table-wrapper wrapper-total">
+                            <div class="table-wrapper-center"><h5 class="heading">$60.00</h5></div>
+                        </td>
+                        <td class="table-wrapper"></td>
+                    </tr>
+                    <tr class="table-row ticket-row">
+                        <td class="table-wrapper wrapper-product" colspan="4">
+                            <span class="fs-3 fw-bold">TOTAL</span>
+                        </td>
+                        <td class="table-wrapper">
+                            <div class="table-wrapper-center"><span class="fs-3 fw-bold">2500</span></div>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
         </div>
-    </section>
+        <div class="wishlist-btn cart-btn">
+            <a href="checkout.html" class="shop-btn">Proceed to Checkout</a>
+        </div>
+    </div>
     <!-- put your content here -->
-    
+
     <!--------------- footer-section--------------->
     <section class="product footer">
         <div class="container">
-
             <div class="footer-section">
                 <div class="row gy-5">
                     <div class="col-lg-3 col-sm-6">
                         <div class="footer-order">
-                            <div class="logo">
-                                <img src="assets/images/logos/footer-logo.webp" alt="logo">
-                            </div>
+                            <div class="logo"><img src="assets/images/logos/footer-logo.webp" alt="logo"></div>
                             <div class="footer-link order-link">
                                 <ul>
                                     <li><a href="#">Track Order</a></li>
@@ -256,17 +283,14 @@
                                     <li><a href="#">Warranty</a></li>
                                 </ul>
                             </div>
-
                         </div>
                     </div>
                     <div class="col-lg-3 col-sm-6">
                         <div class="about-us">
-                            <h4 class="footer-heading footer-title">
-                                About Us
-                            </h4>
+                            <h4 class="footer-heading footer-title">About Us</h4>
                             <div class="footer-link about-link">
                                 <ul>
-                                    <li><a href="#">Rave’s Story</a></li>
+                                    <li><a href="#">Rave's Story</a></li>
                                     <li><a href="#">Work With Us</a></li>
                                     <li><a href="#">Coporate News</a></li>
                                     <li><a href="#">Investors</a></li>
@@ -276,9 +300,7 @@
                     </div>
                     <div class="col-lg-3 col-sm-6">
                         <div class="links">
-                            <h4 class="footer-heading footer-title">
-                                Useful Links
-                            </h4>
+                            <h4 class="footer-heading footer-title">Useful Links</h4>
                             <div class="footer-link useful-link">
                                 <ul>
                                     <li><a href="#">Secure Payment</a></li>
@@ -291,9 +313,7 @@
                     </div>
                     <div class="col-lg-3 col-sm-6">
                         <div class="contact-info">
-                            <h4 class="footer-heading footer-title">
-                                Contact Info
-                            </h4>
+                            <h4 class="footer-heading footer-title">Contact Info</h4>
                             <div class="footer-link contact-link">
                                 <div class="address">
                                     <div class="icon">
@@ -355,7 +375,6 @@
             </div>
         </div>
     </section>
-    <!--------------- footer-section-end--------------->
     <script src="assets/js/jquery_3.7.1.min.js"></script>
     <script src="assets/js/bootstrap_5.3.2.bundle.min.js"></script>
     <script src="assets/js/nouislider.min.js"></script>
@@ -367,6 +386,6 @@
         integrity="sha512-57MDmcccJXYtNnH+ZiBwzC4jb2rvgVCEokYN+L/nLlmO8rfYT/gIpW2A569iJ/3b+0UEasghjuZH/ma3wIs/EQ=="
         data-cf-beacon='{"version":"2024.11.0","token":"1934e9a68e9040bb9f9c6c1ce8c69e6a","r":1,"server_timing":{"name":{"cfCacheStatus":true,"cfEdge":true,"cfExtPri":true,"cfL4":true,"cfOrigin":true,"cfSpeedBrain":true},"location_startswith":null}}'
         crossorigin="anonymous"></script>
+    <script src="https://kit.fontawesome.com/20994dd270.js" crossorigin="anonymous"></script>
 </body>
-
 </html>
