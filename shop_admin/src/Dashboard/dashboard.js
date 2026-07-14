@@ -1,48 +1,12 @@
 import React from "react";
+import Footer from "../Layouts/footer";
+import Sidebar from "../Layouts/sidebar";
 
 export default class Dashboard extends React.Component {
     render() {
         return (
             <div className="wrapper">
-                <nav id="sidebar" className="sidebar js-sidebar">
-                    <div className="sidebar-content js-simplebar">
-                        <a className="sidebar-brand" href="index.html">
-                            <span className="sidebar-brand-text align-middle">
-                                Administrator
-                            </span>
-                        </a>
-                        <ul className="sidebar-nav">
-                            <li className="sidebar-header">
-                                Modules
-                            </li>
-                            <li className="sidebar-item active">
-                                <a className="sidebar-link" href="site_dashboard.html">
-                                    <i className="align-middle" data-feather="sliders" /> <span className="align-middle">Dashboard</span>
-                                </a>
-                            </li>
-                            <li className="sidebar-item">
-                                <a className="sidebar-link" href="site_category.html">
-                                    <i className="align-middle" data-feather="grid" /> <span className="align-middle">Categories</span>
-                                </a>
-                            </li>
-                            <li className="sidebar-item">
-                                <a className="sidebar-link" href="site_product.html">
-                                    <i className="align-middle" data-feather="shopping-bag" /> <span className="align-middle">Products</span>
-                                </a>
-                            </li>
-                            <li className="sidebar-item">
-                                <a className="sidebar-link" href="site_users.html">
-                                    <i className="align-middle" data-feather="users" /> <span className="align-middle">Users</span>
-                                </a>
-                            </li>
-                            <li className="sidebar-item">
-                                <a className="sidebar-link" href="site_orders.html">
-                                    <i className="align-middle" data-feather="shopping-cart" /> <span className="align-middle">Orders</span>
-                                </a>
-                            </li>
-                        </ul>
-                    </div>
-                </nav>
+                <Sidebar />
                 <div className="main">
                     <nav className="navbar navbar-expand navbar-light navbar-bg">
                         <a className="sidebar-toggle js-sidebar-toggle">
@@ -202,15 +166,7 @@ export default class Dashboard extends React.Component {
                             </div>
                         </div>
                     </main>
-                    <footer className="footer">
-                        <div className="container-fluid">
-                            <div className="row text-muted">
-                                <div className="col-12">
-                                    <p className="text-center">Developed @ the easylearn academy</p>
-                                </div>
-                            </div>
-                        </div>
-                    </footer>
+                    <Footer />
                 </div>
             </div>
         );
