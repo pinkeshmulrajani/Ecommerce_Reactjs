@@ -1,8 +1,29 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import Sidebar from '../Layouts/sidebar';
 import Footer from '../Layouts/footer';
+import axios from 'axios';
 export default function Category() {
+
+    useEffect(() => {
+        // we alway use useEffect hook in function component to get data from server using api calling 
+        let apiAddress = "https://theeasylearnacademy.com/shop/ws/category.php";
+        let option = {
+            'url' : apiAddress,
+            'method' : 'get',
+            'responseType' : 'json',
+        }
+
+        // calling api 
+        axios(option).then((response) => {
+            // response.data property has actual response received from server
+            console.log(response.data);
+        }).catch((error) => {
+            // console error if any error occurs
+            console.log(error);
+        });
+    });
+
     return (<div className="wrapper">
         <Sidebar />
         <div className="main">
