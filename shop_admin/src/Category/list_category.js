@@ -1,31 +1,60 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
 import Sidebar from '../Layouts/sidebar';
 import Footer from '../Layouts/footer';
 import axios from 'axios';
+import { ToastContainer, toast, Bounce } from 'react-toastify';
+import { getBaseUrl, getImageBase } from '../common';
+import { showError, showMessage } from '../message';
+
 export default function Category() {
 
-    useEffect(() => {
-        // we alway use useEffect hook in function component to get data from server using api calling 
-        let apiAddress = "https://theeasylearnacademy.com/shop/ws/category.php";
-        let option = {
-            'url' : apiAddress,
-            'method' : 'get',
-            'responseType' : 'json',
-        }
+    const [Categories, setCategories] = useState([]);
 
-        // calling api 
-        axios(option).then((response) => {
-            // response.data property has actual response received from server
-            console.log(response.data);
-        }).catch((error) => {
-            // console error if any error occurs
-            console.log(error);
-        });
+    useEffect(() => {
+        // run this code only one time
+        if(Categories.length == 0) {
+            //     we alway use useEffect hook in function component to get data from server using api calling
+            let apiAddress = getBaseUrl() + "category.php";
+            let option = {
+                'url' : apiAddress,
+                'method' : "get",
+                'responseType' : 'json',
+            };
+
+            // calling api
+            axios(option).then((response) => {
+                // response.data property has actual response received from server
+                console.log(response.data);
+
+                let error = response.data[0]['error'];
+                if(error != 'no') {
+                    alert('error');
+                } else {
+                    // no error
+                    let total = response.data[1]['total'];
+                    if(total === 0) {
+                        alert("Category not found")
+                    } else {
+                        // call function
+                        showMessage();
+                        // there are few categories (total is not zero)
+                        // delete 2 object from beginning as it is not actual data
+                        response.data.splice(0, 2);
+                        // store remaining  categories into state array
+                        setCategories(response.data);
+                    }
+                }
+            }).catch((error) => {
+                // alert("could not fetch categories, you are offline or server is not available");
+                showError();
+            });
+        }
     });
 
     return (<div className="wrapper">
         <Sidebar />
+        <ToastContainer />
         <div className="main">
             <nav className="navbar navbar-expand navbar-light navbar-bg">
                 <a className="sidebar-toggle js-sidebar-toggle">
@@ -34,7 +63,7 @@ export default function Category() {
             </nav>
             <main className="content">
                 <div className="container-fluid p-0">
-                    <h1 className="h3 mb-3" />
+                    {/* <h1 className="h3 mb-3" /> */}
                     <div className="row">
                         <div className="col-12">
                             <div className="card">
@@ -58,20 +87,22 @@ export default function Category() {
                                             </tr>
                                         </thead>
                                         <tbody>
-                                            <tr>
-                                                <td>1</td>
-                                                <td>Category 1</td>
-                                                <td>
-                                                    <a data-fancybox="gallery" href="https://picsum.photos/id/1035/1200/800">
-                                                        <img src="http://picsum.photos/50" className="img-fluid rounded" alt="Category Image" />
-                                                    </a>
-                                                </td>
-                                                <td>Yes</td>
-                                                <td>
-                                                    <Link to="/edit-category" className="btn btn-sm btn-primary">Edit</Link>
-                                                    <button className="btn btn-sm btn-danger">Delete</button>
-                                                </td>
-                                            </tr>
+                                            {Categories.map((item) => {
+                                                return(
+                                                    <tr>
+                                                        <td>{item.id}</td>
+                                                        <td>{item.title}</td>
+                                                        <td>
+                                                            <img src={getImageBase() + "category/" + item.photo} className='img-fluid' />
+                                                        </td>
+                                                        <td>{item.islive}</td>
+                                                        <td>
+                                                            <button type='button' className='btn btn-warning'>Edit</button>
+                                                            <button type='button' className='btn btn-danger'>Delete</button>
+                                                        </td>
+                                                    </tr>
+                                                );
+                                            })}
                                         </tbody>
                                     </table>
                                 </div>

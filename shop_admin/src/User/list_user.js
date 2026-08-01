@@ -1,11 +1,48 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
 import Sidebar from '../Layouts/sidebar';
 import Footer from '../Layouts/footer';
+import axios from 'axios';
+import { ToastContainer } from 'react-toastify';
+import { getBaseUrl } from '../common';
+import { showError, showMessage } from '../message';
+
 export default function Users() {
+	const [users, setUsers] = useState([]);
+
+	useEffect(() => {
+		if(users.length === 0) {
+			let apiAddress = getBaseUrl() + "users.php";
+			let option = {
+				'url' : apiAddress,
+				'method' : "get",
+				'responseType' : 'json',
+			};
+
+			axios(option).then((response) => {
+				console.log(response.data);
+				let error = response.data[0]['error'];
+				if(error !== 'no') {
+					alert('error');
+				} else {
+					let total = response.data[1]['total'];
+					if(total === 0) {
+						alert("User not found")
+					} else {
+						showMessage();
+						response.data.splice(0, 2);
+						setUsers(response.data);
+					}
+				}
+			}).catch((error) => {
+				showError();
+			});
+		}
+	});
 	return (
 		<div className="wrapper">
 			<Sidebar />		
+			<ToastContainer />
 			<div className="main">
 				<nav className="navbar navbar-expand navbar-light navbar-bg">
 					<a className="sidebar-toggle js-sidebar-toggle">
@@ -37,84 +74,23 @@ export default function Users() {
 												</tr>
 											</thead>
 											<tbody>
-												<tr>
-													<td>3</td>
-													<td>ankit3385@gmail.com</td>
-													<td>1234567890</td>
-													<td>
-														<Link to="/send-email?email=ankit3385@gmail.com" className="btn btn-sm btn-info text-white">
-															<i className="align-middle me-1" data-feather="mail" /> Send Email
-														</Link>
-														<button className="btn btn-sm btn-secondary">
-															<i className="align-middle me-1" data-feather="clock" /> View History
-														</button>
-													</td>
-												</tr>
-												<tr>
-													<td>4</td>
-													<td>ankit3395@gmail.com</td>
-													<td>1234567891</td>
-													<td>
-														<Link to="/send-email?email=ankit3395@gmail.com" className="btn btn-sm btn-info text-white">
-															<i className="align-middle me-1" data-feather="mail" /> Send Email
-														</Link>
-														<button className="btn btn-sm btn-secondary">
-															<i className="align-middle me-1" data-feather="clock" /> View History
-														</button>
-													</td>
-												</tr>
-												<tr>
-													<td>5</td>
-													<td>ankit33855@gmail.com</td>
-													<td>1234567895</td>
-													<td>
-														<Link to="/send-email?email=ankit33855@gmail.com" className="btn btn-sm btn-info text-white">
-															<i className="align-middle me-1" data-feather="mail" /> Send Email
-														</Link>
-														<button className="btn btn-sm btn-secondary">
-															<i className="align-middle me-1" data-feather="clock" /> View History
-														</button>
-													</td>
-												</tr>
-												<tr>
-													<td>6</td>
-													<td>dibynyjuc@mailinator.com</td>
-													<td>+1 (665) 326-9563</td>
-													<td>
-														<Link to="/send-email?email=dibynyjuc@mailinator.com" className="btn btn-sm btn-info text-white">
-															<i className="align-middle me-1" data-feather="mail" /> Send Email
-														</Link>
-														<button className="btn btn-sm btn-secondary">
-															<i className="align-middle me-1" data-feather="clock" /> View History
-														</button>
-													</td>
-												</tr>
-												<tr>
-													<td>7</td>
-													<td>ram@gmail.com</td>
-													<td>+1 (762) 436-8979</td>
-													<td>
-														<Link to="/send-email?email=ram@gmail.com" className="btn btn-sm btn-info text-white">
-															<i className="align-middle me-1" data-feather="mail" /> Send Email
-														</Link>
-														<button className="btn btn-sm btn-secondary">
-															<i className="align-middle me-1" data-feather="clock" /> View History
-														</button>
-													</td>
-												</tr>
-												<tr>
-													<td>8</td>
-													<td>vybiqiweby@mailinator.com</td>
-													<td>+1 (627) 649-4204</td>
-													<td>
-														<Link to="/send-email?email=vybiqiweby@mailinator.com" className="btn btn-sm btn-info text-white">
-															<i className="align-middle me-1" data-feather="mail" /> Send Email
-														</Link>
-														<button className="btn btn-sm btn-secondary">
-															<i className="align-middle me-1" data-feather="clock" /> View History
-														</button>
-													</td>
-												</tr>
+												{users.map((item) => {
+													return (
+														<tr key={item.id}>
+															<td>{item.id}</td>
+															<td>{item.email}</td>
+															<td>{item.mobile}</td>
+															<td>
+																<Link to={"/send-email?email=" + item.email} className="btn btn-sm btn-info text-white">
+																	<i className="align-middle me-1" data-feather="mail" /> Send Email
+																</Link>
+																<button className="btn btn-sm btn-secondary">
+																	<i className="align-middle me-1" data-feather="clock" /> View History
+																</button>
+															</td>
+														</tr>
+													);
+												})}
 											</tbody>
 										</table>
 									</div>

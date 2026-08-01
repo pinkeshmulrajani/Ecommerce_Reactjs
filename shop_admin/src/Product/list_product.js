@@ -1,11 +1,47 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
 import Sidebar from '../Layouts/sidebar';
 import Footer from '../Layouts/footer';
+import axios from 'axios';
+import { ToastContainer } from 'react-toastify';
+import { getBaseUrl, getImageBase } from '../common';
+import { showError, showMessage } from '../message';
 
 export default function Product() {
+	const [products, setProducts] = useState([]);
+
 	useEffect(() => {
-		if (window.Fancybox) {
+		if(products.length === 0) {
+			let apiAddress = getBaseUrl() + "product.php";
+			let option = {
+				'url' : apiAddress,
+				'method' : "get",
+				'responseType' : 'json',
+			};
+
+			axios(option).then((response) => {
+				console.log(response.data);
+				let error = response.data[0]['error'];
+				if(error !== 'no') {
+					alert('error');
+				} else {
+					let total = response.data[1]['total'];
+					if(total === 0) {
+						alert("Product not found")
+					} else {
+						showMessage();
+						response.data.splice(0, 2);
+						setProducts(response.data);
+					}
+				}
+			}).catch((error) => {
+				showError();
+			});
+		}
+	});
+
+	useEffect(() => {
+		if (window.Fancybox && products.length > 0) {
 			window.Fancybox.bind("[data-fancybox]", {
 				animated: true,
 				dragToClose: true,
@@ -18,11 +54,12 @@ export default function Product() {
 				}
 			});
 		}
-	}, []);
+	}, [products]);
 
 	return (
 		<div className="wrapper">
 			<Sidebar />
+			<ToastContainer />
 			<div className="main">
 				<nav className="navbar navbar-expand navbar-light navbar-bg">
 					<a className="sidebar-toggle js-sidebar-toggle">
@@ -61,26 +98,32 @@ export default function Product() {
 												</tr>
 											</thead>
 											<tbody>
-												<tr>
-													<td>1</td>
-													<td>10</td>
-													<td>Smartphone</td>
-													<td>$999</td>
-													<td>15</td>
-													<td>180g</td>
-													<td>6.1 inch</td>
-													<td>
- 														<a data-fancybox="gallery" href="https://picsum.photos/id/1025/1200/800">
- 															<img src="https://picsum.photos/50" className="img-fluid rounded" alt="Product" />
- 														</a>
-													</td>
-													<td>Latest flagship phone</td>
-													<td>Yes</td>
-													<td>
-														<Link to="/edit-product" className="btn btn-sm btn-primary">Edit</Link>
-														<button className="btn btn-sm btn-danger">Delete</button>
-													</td>
-												</tr>
+												{products.map((item) => {
+													return (
+														<tr key={item.id}>
+															<td>{item.id}</td>
+															<td>{item.categoryid}</td>
+															<td>{item.title}</td>
+															<td>${item.price}</td>
+															<td>{item.stock}</td>
+															<td>{item.weight}g</td>
+															<td>{item.size}</td>
+															<td>
+																{item.photo && (
+																	<a data-fancybox="gallery" href={getImageBase() + "product/" + item.photo}>
+																		<img src={getImageBase() + "product/" + item.photo} className="img-fluid rounded" alt="Product" style={{ width: '50px' }} />
+																	</a>
+																)}
+															</td>
+															<td>{item.detail}</td>
+															<td>{item.islive === "1" ? "Yes" : "No"}</td>
+															<td>
+																<Link to={"/edit-product?id=" + item.id} className="btn btn-sm btn-primary">Edit</Link>
+																<button className="btn btn-sm btn-danger">Delete</button>
+															</td>
+														</tr>
+													);
+												})}
 											</tbody>
 										</table>
 									</div>

@@ -1,8 +1,34 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import Footer from "../Layouts/footer";
 import Sidebar from "../Layouts/sidebar";
+import axios from 'axios';
+import { getBaseUrl } from '../common';
 
 export default function Dashboard() {
+    const [summary, setSummary] = useState(null);
+
+    useEffect(() => {
+        if(summary === null) {
+            let apiAddress = getBaseUrl() + "summery.php";
+            let option = {
+                'url' : apiAddress,
+                'method' : "get",
+                'responseType' : 'json',
+            };
+
+            axios(option).then((response) => {
+                console.log(response.data);
+                let error = response.data[0]['error'];
+                if(error !== 'no') {
+                    alert('error');
+                } else {
+                    setSummary(response.data[1]);
+                }
+            }).catch((error) => {
+                console.log(error);
+            });
+        }
+    });
     return (
         <div className="wrapper">
             <Sidebar />
@@ -29,7 +55,7 @@ export default function Dashboard() {
                                                 </div>
                                             </div>
                                         </div>
-                                        <h1 className="mt-1 mb-3">25</h1>
+                                        <h1 className="mt-1 mb-3">{summary ? summary.categories : "0"}</h1>
                                         <div className="mb-0">
                                             <span className="text-muted">Total active product categories</span>
                                         </div>
@@ -49,7 +75,7 @@ export default function Dashboard() {
                                                 </div>
                                             </div>
                                         </div>
-                                        <h1 className="mt-1 mb-3">150</h1>
+                                        <h1 className="mt-1 mb-3">{summary ? summary.products : "0"}</h1>
                                         <div className="mb-0">
                                             <span className="text-muted">Total items in active inventory</span>
                                         </div>
@@ -69,7 +95,7 @@ export default function Dashboard() {
                                                 </div>
                                             </div>
                                         </div>
-                                        <h1 className="mt-1 mb-3">138</h1>
+                                        <h1 className="mt-1 mb-3">{summary ? summary.users : "0"}</h1>
                                         <div className="mb-0">
                                             <span className="text-muted">Registered customers</span>
                                         </div>
@@ -91,7 +117,7 @@ export default function Dashboard() {
                                                 </div>
                                             </div>
                                         </div>
-                                        <h1 className="mt-1 mb-3">12</h1>
+                                        <h1 className="mt-1 mb-3">{summary ? summary.daily : "0"}</h1>
                                         <div className="mb-0">
                                             <span className="badge badge-success-light">+8.2%</span>
                                             <span className="text-muted">Since yesterday</span>
@@ -112,7 +138,7 @@ export default function Dashboard() {
                                                 </div>
                                             </div>
                                         </div>
-                                        <h1 className="mt-1 mb-3">85</h1>
+                                        <h1 className="mt-1 mb-3">{summary ? summary.weekly : "0"}</h1>
                                         <div className="mb-0">
                                             <span className="badge badge-success-light">+12.5%</span>
                                             <span className="text-muted">Since last week</span>
@@ -133,7 +159,7 @@ export default function Dashboard() {
                                                 </div>
                                             </div>
                                         </div>
-                                        <h1 className="mt-1 mb-3">340</h1>
+                                        <h1 className="mt-1 mb-3">{summary ? summary.monthly : "0"}</h1>
                                         <div className="mb-0">
                                             <span className="badge badge-danger-light">-2.3%</span>
                                             <span className="text-muted">Since last month</span>
@@ -154,7 +180,7 @@ export default function Dashboard() {
                                                 </div>
                                             </div>
                                         </div>
-                                        <h1 className="mt-1 mb-3">4,120</h1>
+                                        <h1 className="mt-1 mb-3">{summary ? summary.yearly : "0"}</h1>
                                         <div className="mb-0">
                                             <span className="badge badge-success-light">+18.7%</span>
                                             <span className="text-muted">Since last year</span>
