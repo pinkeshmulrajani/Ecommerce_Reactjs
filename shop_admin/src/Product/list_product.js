@@ -118,7 +118,7 @@ export default function Product() {
 															<td>{item.detail}</td>
 															<td>{item.islive === "1" ? "Yes" : "No"}</td>
 															<td>
-																<Link to={"/edit-product?id=" + item.id} className="btn btn-sm btn-primary">Edit</Link>
+																<Link to={"/edit-product/" + item.id} className="btn btn-sm btn-primary">Edit</Link>
 																<button className="btn btn-sm btn-danger">Delete</button>
 															</td>
 														</tr>
