@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { Link } from 'react-router-dom';
+import { data, Link } from 'react-router-dom';
 import Sidebar from '../Layouts/sidebar';
 import Footer from '../Layouts/footer';
 import axios from 'axios';
@@ -52,6 +52,30 @@ export default function Category() {
         }
     });
 
+    let deleteCategory = (categoryid) => {
+        let apiAddress = getBaseUrl() + "delete_category.php?id=" + categoryid;
+        let option = {
+            url : apiAddress,
+            method: 'get',
+            responseType: 'json',
+        };
+        axios(option).then((response) => {
+            let error = response.data[0]['error'];
+            if(error !== 'no') {
+                showError(error);
+            } else {
+                let temp = Categories.filter((item) => {
+                    if(item.id !== categoryid)
+                        return item;
+                });
+                setCategories(temp);
+                showMessage(response.data[1]['message']);
+            }
+        }).catch((error) => {
+            showError();
+        });
+    }
+
     return (<div className="wrapper">
         <Sidebar />
         <ToastContainer />
@@ -97,8 +121,8 @@ export default function Category() {
                                                         </td>
                                                         <td>{item.islive}</td>
                                                         <td>
-                                                            <button type='button' className='btn btn-warning'>Edit</button>
-                                                            <button type='button' className='btn btn-danger'>Delete</button>
+                                                            <Link to={"/edit-category/" + item.id} className='btn btn-warning'>Edit</Link>
+                                                            <button onClick={() => deleteCategory(item.id)} className='btn btn-danger'>Delete</button>
                                                         </td>
                                                     </tr>
                                                 );
