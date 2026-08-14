@@ -28,7 +28,7 @@ function MyRouter() {
 				<Route path="/edit-product/:productid" element={<EditProduct />} />
 				<Route path="/forgot-password" element={<ForgotPassword />} />
 				<Route path="/login" element={<Login />} />
-				<Route path="/order-detail" element={<OrderDetails />} />
+				<Route path="/order-detail/:orderid" element={<OrderDetails />} />
 				<Route path="/orders" element={<ListOrder />} />
 				<Route path="/product" element={<ListProduct />} />
 				<Route path="/send-email" element={<SendEmail />} />
