@@ -3,12 +3,32 @@ import Footer from "../Layouts/footer";
 import Sidebar from "../Layouts/sidebar";
 import axios from 'axios';
 import { getBaseUrl } from '../common';
+import { ToastContainer } from 'react-toastify';
+import { showError, showMessage } from '../message';
+import { useCookies } from 'react-cookie';
+import { useNavigate } from 'react-router-dom';
 
 export default function Dashboard() {
-    const [summary, setSummary] = useState(null);
+    const [summary, setSummary] = useState({
+        categories: "-",
+		products: "-",
+		users: "-",
+		orders: "-",
+		daily: "-",
+		weekly: "-",
+		monthly: "-",
+		yearly: "-"
+    });
+    const [fetched, setFetched] = useState(false);
+	const [cookies] = useCookies(['theeasylearn']);
+	let navigate = useNavigate();
 
     useEffect(() => {
-        if(summary === null) {
+        // check whether userid cookies exists or not. if not redirect to login
+        if(cookies['userid'] == undefined){
+			navigate('/');
+		}
+        if(fetched == false) {
             let apiAddress = getBaseUrl() + "summery.php";
             let option = {
                 'url' : apiAddress,
@@ -17,21 +37,24 @@ export default function Dashboard() {
             };
 
             axios(option).then((response) => {
-                console.log(response.data);
                 let error = response.data[0]['error'];
-                if(error !== 'no') {
+                if(error != 'no') {
                     alert('error');
                 } else {
+                    showMessage();
                     setSummary(response.data[1]);
+                    setFetched(true);
                 }
             }).catch((error) => {
                 console.log(error);
             });
         }
     });
+
     return (
         <div className="wrapper">
             <Sidebar />
+            <ToastContainer />
             <div className="main">
                 <nav className="navbar navbar-expand navbar-light navbar-bg">
                     <a className="sidebar-toggle js-sidebar-toggle">
@@ -55,7 +78,7 @@ export default function Dashboard() {
                                                 </div>
                                             </div>
                                         </div>
-                                        <h1 className="mt-1 mb-3">{summary ? summary.categories : "0"}</h1>
+                                        <h1 className="mt-1 mb-3">{summary.categories}</h1>
                                         <div className="mb-0">
                                             <span className="text-muted">Total active product categories</span>
                                         </div>
@@ -75,7 +98,7 @@ export default function Dashboard() {
                                                 </div>
                                             </div>
                                         </div>
-                                        <h1 className="mt-1 mb-3">{summary ? summary.products : "0"}</h1>
+                                        <h1 className="mt-1 mb-3">{summary.products}</h1>
                                         <div className="mb-0">
                                             <span className="text-muted">Total items in active inventory</span>
                                         </div>
@@ -95,7 +118,7 @@ export default function Dashboard() {
                                                 </div>
                                             </div>
                                         </div>
-                                        <h1 className="mt-1 mb-3">{summary ? summary.users : "0"}</h1>
+                                        <h1 className="mt-1 mb-3">{summary.users}</h1>
                                         <div className="mb-0">
                                             <span className="text-muted">Registered customers</span>
                                         </div>
@@ -117,7 +140,7 @@ export default function Dashboard() {
                                                 </div>
                                             </div>
                                         </div>
-                                        <h1 className="mt-1 mb-3">{summary ? summary.daily : "0"}</h1>
+                                        <h1 className="mt-1 mb-3">{summary.daily}</h1>
                                         <div className="mb-0">
                                             <span className="badge badge-success-light">+8.2%</span>
                                             <span className="text-muted">Since yesterday</span>
@@ -138,7 +161,7 @@ export default function Dashboard() {
                                                 </div>
                                             </div>
                                         </div>
-                                        <h1 className="mt-1 mb-3">{summary ? summary.weekly : "0"}</h1>
+                                        <h1 className="mt-1 mb-3">{summary.weekly !== "-" ? parseFloat(summary.weekly).toLocaleString() : "-"}</h1>
                                         <div className="mb-0">
                                             <span className="badge badge-success-light">+12.5%</span>
                                             <span className="text-muted">Since last week</span>
@@ -159,7 +182,7 @@ export default function Dashboard() {
                                                 </div>
                                             </div>
                                         </div>
-                                        <h1 className="mt-1 mb-3">{summary ? summary.monthly : "0"}</h1>
+                                        <h1 className="mt-1 mb-3">{summary.monthly !== "-" ? parseFloat(summary.monthly).toLocaleString() : "-"}</h1>
                                         <div className="mb-0">
                                             <span className="badge badge-danger-light">-2.3%</span>
                                             <span className="text-muted">Since last month</span>
@@ -180,7 +203,7 @@ export default function Dashboard() {
                                                 </div>
                                             </div>
                                         </div>
-                                        <h1 className="mt-1 mb-3">{summary ? summary.yearly : "0"}</h1>
+                                        <h1 className="mt-1 mb-3">{summary.yearly !== "-" ? parseFloat(summary.yearly).toLocaleString() : "-"}</h1>
                                         <div className="mb-0">
                                             <span className="badge badge-success-light">+18.7%</span>
                                             <span className="text-muted">Since last year</span>

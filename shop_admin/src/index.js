@@ -1,6 +1,7 @@
 import React from "react";
 import ReactDOM from "react-dom/client";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
+import 'react-toastify/dist/ReactToastify.css';
 import AddCategory from "./Category/add_category";
 import AddProduct from "./Product/add_product";
 import EditCategory from "./Category/edit_category";
@@ -14,28 +15,31 @@ import ListUser from "./User/list_user";
 import Login from "./Auth/login";
 import ForgotPassword from "./Auth/forgot_password";
 import Dashboard from "./Dashboard/dashboard";
+import { CookiesProvider } from 'react-cookie';
 
 function MyRouter() {
 	return (
-		<BrowserRouter>
-			<Routes>
-				<Route path="/" element={<Dashboard />} />
-				<Route path="/dashboard" element={<Dashboard />} />
-				<Route path="/add-category" element={<AddCategory />} />
-				<Route path="/add-product" element={<AddProduct />} />
-				<Route path="/category" element={<ListCategory />} />
-				<Route path="/edit-category/:categoryid" element={<EditCategory />} />
-				<Route path="/edit-product/:productid" element={<EditProduct />} />
-				<Route path="/forgot-password" element={<ForgotPassword />} />
-				<Route path="/login" element={<Login />} />
-				<Route path="/order-detail/:orderid" element={<OrderDetails />} />
-				<Route path="/orders" element={<ListOrder />} />
-				<Route path="/product" element={<ListProduct />} />
-				<Route path="/send-email" element={<SendEmail />} />
-				{/* <Route path="/template" element={<Template />} /> */}
-				<Route path="/users" element={<ListUser />} />
-			</Routes>
-		</BrowserRouter>
+		<CookiesProvider>
+			<BrowserRouter>
+				<Routes>
+					<Route path="/" element={<Login />} />
+					<Route path="/dashboard" element={<Dashboard />} />
+					<Route path="/add-category" element={<AddCategory />} />
+					<Route path="/add-product" element={<AddProduct />} />
+					<Route path="/category" element={<ListCategory />} />
+					<Route path="/edit-category/:categoryid" element={<EditCategory />} />
+					<Route path="/edit-product/:productid" element={<EditProduct />} />
+					<Route path="/forgot-password" element={<ForgotPassword />} />
+					<Route path="/login" element={<Login />} />
+					<Route path="/order-detail/:orderid" element={<OrderDetails />} />
+					<Route path="/orders" element={<ListOrder />} />
+					<Route path="/product" element={<ListProduct />} />
+					<Route path="/send-email" element={<SendEmail />} />
+					{/* <Route path="/template" element={<Template />} /> */}
+					<Route path="/users" element={<ListUser />} />
+				</Routes>
+			</BrowserRouter>
+		</CookiesProvider>
 	);
 }
 
