@@ -1,16 +1,19 @@
 import React, { useState, useEffect } from 'react';
-import { Link, useParams } from 'react-router-dom';
+import { Link, useNavigate, useParams } from 'react-router-dom';
 import { getBaseUrl } from '../common';
 import axios from 'axios';
 import { ToastContainer } from 'react-toastify';
 import { showError, showMessage } from '../message';
 import Footer from '../Layouts/footer';
 import Sidebar from '../Layouts/sidebar';
+import { useCookies } from 'react-cookie';
 
 export default function OrderDetail() {
 	const { orderid } = useParams();
 	const [order, setOrder] = useState(null);
 	const [items, setItems] = useState([]);
+	const [cookies] = useCookies(['theeasylearn']);
+	let navigate = useNavigate();
 
 	const getOrderStatusBadge = (status) => {
 		switch (status) {
@@ -56,6 +59,10 @@ export default function OrderDetail() {
 	};
 
 	useEffect(() => {
+		// check whether userid cookies exists or not. if not redirect to login
+        if(cookies['userid'] == undefined){
+			navigate('/');
+		}
 		if (orderid) {
 			// Fetch order details
 			let orderApiAddress = getBaseUrl() + "orders.php?id=" + orderid;

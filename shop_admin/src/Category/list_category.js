@@ -1,17 +1,26 @@
 import React, { useEffect, useState } from 'react';
-import { data, Link } from 'react-router-dom';
+import { data, Link, useNavigate } from 'react-router-dom';
 import Sidebar from '../Layouts/sidebar';
 import Footer from '../Layouts/footer';
 import axios from 'axios';
 import { ToastContainer, toast, Bounce } from 'react-toastify';
 import { getBaseUrl, getImageBase } from '../common';
 import { showError, showMessage } from '../message';
+import { useCookies } from 'react-cookie';
 
 export default function Category() {
 
     const [Categories, setCategories] = useState([]);
+    const [cookies] = useCookies(['theeasylearn']);
+    let navigate = useNavigate();
 
     useEffect(() => {
+
+        // check whether userid cookies exists or not. if not redirect to login
+        if(cookies['userid'] == undefined){
+			navigate('/');
+		}
+        
         // run this code only one time
         if(Categories.length == 0) {
             //     we alway use useEffect hook in function component to get data from server using api calling

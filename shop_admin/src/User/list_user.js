@@ -1,16 +1,23 @@
 import React, { useEffect, useState } from 'react';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import Sidebar from '../Layouts/sidebar';
 import Footer from '../Layouts/footer';
 import axios from 'axios';
 import { ToastContainer } from 'react-toastify';
 import { getBaseUrl } from '../common';
 import { showError, showMessage } from '../message';
+import { useCookies } from 'react-cookie';
 
 export default function Users() {
 	const [users, setUsers] = useState([]);
+	const [cookies] = useCookies(['theeasylearn']);
+	let navigate = useNavigate();
 
 	useEffect(() => {
+		// check whether userid cookies exists or not. if not redirect to login
+        if(cookies['userid'] == undefined){
+			navigate('/');
+		}
 		if(users.length === 0) {
 			let apiAddress = getBaseUrl() + "users.php";
 			let option = {

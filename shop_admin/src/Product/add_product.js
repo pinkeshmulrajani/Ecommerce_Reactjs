@@ -6,6 +6,7 @@ import { getBaseUrl } from '../common';
 import axios from 'axios';
 import { ToastContainer, toast, Bounce } from 'react-toastify';
 import { showError, showMessage } from '../message';
+import { useCookies } from 'react-cookie';
 
 
 export default function AddProduct() {
@@ -22,9 +23,14 @@ export default function AddProduct() {
     var [detail, setDetail] = useState('');
     var [stock, setStock] = useState('');
 
+    const [cookies] = useCookies(['theeasylearn']);
     // create hook of useNavigate
     let navigate = useNavigate();
     useEffect(() => {
+        // check whether userid cookies exists or not. if not redirect to login
+        if(cookies['userid'] == undefined){
+			navigate('/');
+		}
         // run this code only one time
         if(categories.length == 0) {
             // we always use useEffect hook in function component to get data from server using api calling

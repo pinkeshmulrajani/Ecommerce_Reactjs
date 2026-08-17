@@ -6,11 +6,13 @@ import axios from 'axios';
 import { ToastContainer } from 'react-toastify';
 import { showError, showMessage } from '../message';
 import Footer from '../Layouts/footer';
+import { useCookies } from 'react-cookie';
 
 export default function EditProduct() {
 
 	const { productid } = useParams();
 	let navigate = useNavigate(); 
+	const [cookies] = useCookies(['theeasylearn']);
 	const [title, setTitle] = useState('');
 	const [price, setPrice] = useState('');
 	const [weight, setWeight] = useState('');
@@ -70,17 +72,6 @@ export default function EditProduct() {
 			axios(option).then((response) => {
 				// response.data property has actual response received from server
 				console.log(response.data);
-				/*
-				[   
-				0 {"error":"no"},
-				1 {"total":6},
-				2 {"id":"1","title":"laptop","photo":"laptop.jpg","islive":"1","isdeleted":"0"},
-				3{"id":"2","title":"mobile","photo":"mobile.jpg","islive":"1","isdeleted":"0"},
-				4{"id":"3","title":"book","photo":"books.jpg","islive":"1","isdeleted":"0"},
-				5{"id":"4","title":"Cookies & waffers","photo":"Cookies.jpg","islive":"1","isdeleted":"0"},
-				6{"id":"5","title":"Washing Powders","photo":"washing_powders.jpg","islive":"1","isdeleted":"0"},
-				7{"id":"6","title":"shampoo","photo":"shampoo.jpg","islive":"1","isdeleted":"0"}] 
-				*/
 				let error = response.data[0]['error'];
 				if (error != 'no') {
 					alert(error);
@@ -107,6 +98,10 @@ export default function EditProduct() {
 		}
 	}
 	useEffect(() => {
+		// check whether userid cookies exists or not. if not redirect to login
+        if(cookies['userid'] == undefined){
+			navigate('/');
+		}
 		fetchProduct();
 		fetchCategories();
 	}, [productid]);
