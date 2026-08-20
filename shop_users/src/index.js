@@ -17,25 +17,27 @@ import Product from './Product/product';
 import ProductDetails from './Product/product_details';
 import Cart from './cart/cart';
 
-export function MyRouter() {
-  return (
-    <BrowserRouter>
-      <Routes>
-        <Route path="/" element={<Home />} />
-        <Route path="/shop" element={<Shop />} />
-        <Route path="/login" element={<Login />} />
-        <Route path="/register" element={<Register />} />
-        <Route path="/change-password" element={<ChangePassword />} />
-        <Route path="/forgot-password" element={<ForgotPassword />} />
-        <Route path="/checkout" element={<Checkout />} />
-        <Route path="/category" element={<Category />} />
-        <Route path="/category-product" element={<SiteCategoryProduct />} />
-        <Route path="/product" element={<Product />} />
-        <Route path="/product-details" element={<ProductDetails />} />
-        <Route path="/cart" element={<Cart />} />
-      </Routes>
-    </BrowserRouter>
-  );
+export class MyRouter extends React.Component {
+  render() {
+    return (
+      <BrowserRouter>
+        <Routes>
+          <Route path="/" element={<Home />} />
+          <Route path="/shop" element={<Shop />} />
+          <Route path="/login" element={<Login />} />
+          <Route path="/register" element={<Register />} />
+          <Route path="/change-password" element={<ChangePassword />} />
+          <Route path="/forgot-password" element={<ForgotPassword />} />
+          <Route path="/checkout" element={<Checkout />} />
+          <Route path="/category" element={<Category />} />
+          <Route path="/category-product" element={<SiteCategoryProduct />} />
+          <Route path="/product" element={<Product />} />
+          <Route path="/product-details" element={<ProductDetails />} />
+          <Route path="/cart" element={<Cart />} />
+        </Routes>
+      </BrowserRouter>
+    );
+  }
 }
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
