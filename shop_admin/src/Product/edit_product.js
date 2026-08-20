@@ -6,13 +6,12 @@ import axios from 'axios';
 import { ToastContainer } from 'react-toastify';
 import { showError, showMessage } from '../message';
 import Footer from '../Layouts/footer';
-import { useCookies } from 'react-cookie';
+import useVerifyLogin from '../verify-login';
 
 export default function EditProduct() {
 
 	const { productid } = useParams();
-	let navigate = useNavigate(); 
-	const [cookies] = useCookies(['theeasylearn']);
+	let navigate = useNavigate();
 	const [title, setTitle] = useState('');
 	const [price, setPrice] = useState('');
 	const [weight, setWeight] = useState('');
@@ -97,11 +96,9 @@ export default function EditProduct() {
 			});
 		}
 	}
+	useVerifyLogin();
 	useEffect(() => {
-		// check whether userid cookies exists or not. if not redirect to login
-        if(cookies['userid'] == undefined){
-			navigate('/');
-		}
+		
 		fetchProduct();
 		fetchCategories();
 	}, [productid]);

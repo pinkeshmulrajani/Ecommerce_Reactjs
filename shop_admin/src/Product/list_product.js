@@ -6,18 +6,15 @@ import axios from 'axios';
 import { ToastContainer } from 'react-toastify';
 import { getBaseUrl, getImageBase } from '../common';
 import { showError, showMessage } from '../message';
-import { useCookies } from 'react-cookie';
+import useVerifyLogin from '../verify-login';
 
 export default function Product() {
 	const [products, setProducts] = useState([]);
-	const [cookies] = useCookies(['theeasylearn']);
 	let navigate = useNavigate();
+	useVerifyLogin();
 
 	useEffect(() => {
-		// check whether userid cookies exists or not. if not redirect to login
-        if(cookies['userid'] == undefined){
-			navigate('/');
-		}
+		
 		if(products.length === 0) {
 			let apiAddress = getBaseUrl() + "product.php";
 			let option = {
@@ -48,10 +45,7 @@ export default function Product() {
 	});
 
 	useEffect(() => {
-		// check whether userid cookies exists or not. if not redirect to login
-        if(cookies['userid'] == undefined){
-			navigate('/');
-		}
+		
 		if (window.Fancybox && products.length > 0) {
 			window.Fancybox.bind("[data-fancybox]", {
 				animated: true,
