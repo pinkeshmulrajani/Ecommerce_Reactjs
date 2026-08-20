@@ -16,6 +16,7 @@ import Login from "./Auth/login";
 import ForgotPassword from "./Auth/forgot_password";
 import Dashboard from "./Dashboard/dashboard";
 import { CookiesProvider } from 'react-cookie';
+import Logout from "./Auth/logout";
 
 function MyRouter() {
 	return (
@@ -37,6 +38,7 @@ function MyRouter() {
 					<Route path="/send-email" element={<SendEmail />} />
 					{/* <Route path="/template" element={<Template />} /> */}
 					<Route path="/users" element={<ListUser />} />
+					<Route path="/logout" element={<Logout />} />
 				</Routes>
 			</BrowserRouter>
 		</CookiesProvider>
