@@ -6,20 +6,15 @@ import axios from 'axios';
 import { ToastContainer, toast, Bounce } from 'react-toastify';
 import { getBaseUrl, getImageBase } from '../common';
 import { showError, showMessage } from '../message';
-import { useCookies } from 'react-cookie';
+import useVerifyLogin from '../verify-login';
 
 export default function Category() {
 
     const [Categories, setCategories] = useState([]);
-    const [cookies] = useCookies(['theeasylearn']);
     let navigate = useNavigate();
+    useVerifyLogin();
 
     useEffect(() => {
-
-        // check whether userid cookies exists or not. if not redirect to login
-        if(cookies['userid'] == undefined){
-			navigate('/');
-		}
         
         // run this code only one time
         if(Categories.length == 0) {

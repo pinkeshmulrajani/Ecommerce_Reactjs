@@ -5,8 +5,8 @@ import axios from 'axios';
 import { getBaseUrl } from '../common';
 import { ToastContainer } from 'react-toastify';
 import { showError, showMessage } from '../message';
-import { useCookies } from 'react-cookie';
 import { useNavigate } from 'react-router-dom';
+import useVerifyLogin from '../verify-login';
 
 export default function Dashboard() {
     const [summary, setSummary] = useState({
@@ -20,14 +20,10 @@ export default function Dashboard() {
 		yearly: "-"
     });
     const [fetched, setFetched] = useState(false);
-	const [cookies] = useCookies(['theeasylearn']);
+	useVerifyLogin();
 	let navigate = useNavigate();
 
     useEffect(() => {
-        // check whether userid cookies exists or not. if not redirect to login
-        if(cookies['userid'] == undefined){
-			navigate('/');
-		}
         if(fetched == false) {
             let apiAddress = getBaseUrl() + "summery.php";
             let option = {
@@ -46,7 +42,7 @@ export default function Dashboard() {
                     setFetched(true);
                 }
             }).catch((error) => {
-                console.log(error);
+                showError();
             });
         }
     });

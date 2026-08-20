@@ -6,8 +6,10 @@ import { getBaseUrl } from '../common';
 import { data, useNavigate } from 'react-router-dom';
 import axios from 'axios';
 import { showError, showMessage } from '../message';
+import useVerifyLogin from '../verify-login';
 
 export default function AddCategory() {
+  useVerifyLogin();
 
   const [categories, setCategories] = useState([]);
   // create state variable for each and every input

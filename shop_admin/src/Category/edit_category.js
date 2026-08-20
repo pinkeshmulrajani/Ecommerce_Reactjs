@@ -5,13 +5,12 @@ import { data, useNavigate, useParams } from 'react-router-dom';
 import { getBaseUrl, getImageBase } from '../common';
 import axios from 'axios';
 import { showError, showMessage } from '../message';
-import { useCookies } from 'react-cookie';
+import useVerifyLogin from '../verify-login';
 
 export default function EditCategory() {
 	
 	const { categoryid } = useParams();
 	let navigate = useNavigate();
-	const [cookies] = useCookies(['theeasylearn']);
 	const [title, setTitle] = useState('');
 	const [photo, setPhoto] = useState(null);
 	const [oldPhoto, setOldPhoto] = useState('');
@@ -74,11 +73,8 @@ export default function EditCategory() {
 	// 	}
 	// }
 
+	useVerifyLogin();
 	useEffect(() => {
-		// check whether userid cookies exists or not. if not redirect to login
-        if(cookies['userid'] == undefined){
-			navigate('/');
-		}
 		fetchCategory();
 		// fetchCategories();
 	}, [categoryid]);
