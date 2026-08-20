@@ -6,18 +6,15 @@ import axios from 'axios';
 import { ToastContainer } from 'react-toastify';
 import { getBaseUrl } from '../common';
 import { showError, showMessage } from '../message';
-import { useCookies } from 'react-cookie';
+import useVerifyLogin from '../verify-login';
 
 export default function ListOrder() {
 	const [orders, setOrders] = useState([]);
-	const [cookies] = useCookies(['theeasylearn']);
 	let navigate = useNavigate();
+	useVerifyLogin();
 
 	useEffect(() => {
-		// check whether userid cookies exists or not. if not redirect to login
-        if(cookies['userid'] == undefined){
-			navigate('/');
-		}
+		
 		if(orders.length === 0) {
 			let apiAddress = getBaseUrl() + "orders.php";
 			let option = {

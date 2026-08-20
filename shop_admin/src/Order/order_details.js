@@ -6,14 +6,14 @@ import { ToastContainer } from 'react-toastify';
 import { showError, showMessage } from '../message';
 import Footer from '../Layouts/footer';
 import Sidebar from '../Layouts/sidebar';
-import { useCookies } from 'react-cookie';
+import useVerifyLogin from '../verify-login';
 
 export default function OrderDetail() {
 	const { orderid } = useParams();
 	const [order, setOrder] = useState(null);
 	const [items, setItems] = useState([]);
-	const [cookies] = useCookies(['theeasylearn']);
 	let navigate = useNavigate();
+	useVerifyLogin();
 
 	const getOrderStatusBadge = (status) => {
 		switch (status) {
@@ -59,10 +59,7 @@ export default function OrderDetail() {
 	};
 
 	useEffect(() => {
-		// check whether userid cookies exists or not. if not redirect to login
-        if(cookies['userid'] == undefined){
-			navigate('/');
-		}
+		
 		if (orderid) {
 			// Fetch order details
 			let orderApiAddress = getBaseUrl() + "orders.php?id=" + orderid;

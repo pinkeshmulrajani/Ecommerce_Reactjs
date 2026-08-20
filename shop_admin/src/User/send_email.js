@@ -1,9 +1,11 @@
 import React, { useState, useEffect } from 'react';
 import Sidebar from '../Layouts/sidebar';
 import Footer from '../Layouts/footer';
+import useVerifyLogin from '../verify-login';
 
 export default function SendEmail() {
 	const [email, setEmail] = useState('');
+	useVerifyLogin();
 
 	useEffect(() => {
 		const params = new URLSearchParams(window.location.search);
