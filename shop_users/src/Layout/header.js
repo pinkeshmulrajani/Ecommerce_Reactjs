@@ -165,6 +165,9 @@ class Header extends React.Component {
                     <Link to="/shop"><span className="list-text">Shop</span></Link>
                   </li>
                   <li>
+                    <Link to="/product"><span className="list-text">Products</span></Link>
+                  </li>
+                  <li>
                     <Link to="/register"><span className="list-text">Register</span></Link>
                   </li>
                   <li>
